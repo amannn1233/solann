@@ -82,11 +82,12 @@ async def listen_transactions():
                 notify_telegram(message)
                 print(f"[{timestamp()}] ✉️ Alert: {wallet} -{sol:.2f} SOL")
 
-# ─── 30-MINUTE STATUS UPDATE TASK ────────────────────────────────────────
+# ─── 30-MINUTE STATUS UPDATE TASK (fixed to delay first message) ─────────────
 async def send_status_updates():
+    await asyncio.sleep(1800)  # Delay first message by 30 minutes
     while True:
         notify_telegram("✅ Solana Monitor bot is running smoothly. Next update in 30 minutes.")
-        await asyncio.sleep(1800)  # 1800 seconds = 30 minutes
+        await asyncio.sleep(1800)
 
 # ─── Combined Run Forever Task ───────────────────────────────────────────
 async def run_forever():
@@ -108,3 +109,4 @@ async def run_forever():
 if __name__ == "__main__":
     print(f"[{timestamp()}] 🔌 Starting Solana Wallet Monitor…")
     asyncio.run(run_forever())
+    
