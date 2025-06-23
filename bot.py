@@ -14,6 +14,7 @@ USER_ID = os.getenv("TELEGRAM_USER_ID")
 
 WALLETS = [
     "dUJNHh9Nm9rsn7ykTViG7N7BJuaoJJD9H635B8BVifa",
+    "7woqfBPdCcvikH5JNt6eC3m4qYYWvRJ3iQc36qVb1y3h",
     "9B1fR2Z38ggjqmFuhYBEsa7fXaBR1dkC7BamixjmWZb4"
 ]
 
