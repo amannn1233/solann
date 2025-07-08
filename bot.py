@@ -5,6 +5,8 @@ import requests
 import websockets
 from datetime import datetime, timezone
 from dotenv import load_dotenv
+from fastapi import FastAPI
+import uvicorn
 
 load_dotenv()
 
@@ -23,6 +25,17 @@ THRESHOLD = int(20 * 1e9)  # 20 SOL
 
 subs = {}
 balances = {}
+
+# ------------------ FASTAPI (UPTIME) SETUP ------------------
+fast_app = FastAPI()
+
+@fast_app.get("/")
+async def root():
+    return {"status": "OK"}
+
+def run_web_server():
+    port = int(os.environ.get("PORT", 8080))
+    uvicorn.run(fast_app, host="0.0.0.0", port=port)
 
 # ─── Utility Functions ───────────────────────────────────────────────────
 def timestamp():
@@ -64,7 +77,7 @@ async def listen_transactions():
             sub_id = params["subscription"]
             wallet = subs.get(sub_id)
             data = params["result"]["value"]
-            lamports = data["lamports"]
+            lamports = data.get("lamports")
 
             if balances[wallet] is None:
                 balances[wallet] = lamports
@@ -83,7 +96,6 @@ async def listen_transactions():
                 notify_telegram(message)
                 print(f"[{timestamp()}] ✉️ Alert: {wallet} -{sol:.2f} SOL")
 
-# ─── Combined Run Forever Task ───────────────────────────────────────────
 async def run_forever():
     delay = 1
     while True:
@@ -99,4 +111,10 @@ async def run_forever():
 # ─── Main Entrypoint ────────────────────────────────────────────────────
 if __name__ == "__main__":
     print(f"[{timestamp()}] 🔌 Starting Solana Wallet Monitor…")
+    # Start web server for Render uptime
+    import threading
+    threading.Thread(target=run_web_server, daemon=True).start()
+
+    # Run the monitoring loop
     asyncio.run(run_forever())
+    
