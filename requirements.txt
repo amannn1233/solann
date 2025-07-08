@@ -1,3 +1,6 @@
+fastapi
+uvicorn[standard]
+python-dotenv
 requests
 websockets
-python-dotenv
+python-telegram-bot
