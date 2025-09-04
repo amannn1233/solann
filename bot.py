@@ -16,7 +16,7 @@ USER_ID = os.getenv("TELEGRAM_USER_ID")
 
 WALLETS = [
     "dUJNHh9Nm9rsn7ykTViG7N7BJuaoJJD9H635B8BVifa",
-    "7woqfBPdCcvikH5JNt6eC3m4qYYWvRJ3iQc36qVb1y3h",
+    "6KK9rw7aU7HaLiHPiXHStcpSnSXuH5w7oh8Aa5ecT6Ck",
     "9B1fR2Z38ggjqmFuhYBEsa7fXaBR1dkC7BamixjmWZb4"
 ]
 
@@ -118,3 +118,4 @@ if __name__ == "__main__":
     # Run the monitoring loop
     asyncio.run(run_forever())
     
+
